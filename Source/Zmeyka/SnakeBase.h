@@ -21,8 +21,8 @@ UCLASS()
 class ZMEYKA_API ASnakeBase : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	ASnakeBase();
 
@@ -33,7 +33,10 @@ public:
 	float ElementSize;
 
 	UPROPERTY(EditDefaultsOnly)
-	float MovementSpeed;
+	float NormalMovementSpeed;
+
+	UPROPERTY()
+	bool CanChangeDirection;
 
 	UPROPERTY()
 	TArray<ASnakeElementBase*> SnakeElements;
@@ -41,15 +44,31 @@ public:
 	UPROPERTY()
 	EMovementDirection LastMoveDirection;
 
+	float FasterMovementSpeed;
+
+	float SlowerMovementSpeed;
+
+	float CurrentMovementSpeed;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable)
 	void AddSnakeElements(int ElementsNum = 1);
 
+	UFUNCTION(BlueprintCallable)
 	void Move();
+
+	UFUNCTION()
+	void SnakeELementOverlap(ASnakeElementBase* OverlappedBlock, AActor* Other);
+
+	void SetNewBlockPosition(FVector NewBlockPosition);
+
+	void PickUpBonusSpeedUP();
+
+	void PickUpBonusSpeedDOWN();
 };

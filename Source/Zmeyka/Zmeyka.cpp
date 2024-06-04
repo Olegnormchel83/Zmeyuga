@@ -3,4 +3,4 @@
 #include "Zmeyka.h"
 #include "Modules/ModuleManager.h"
 
-IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, Zmeyka, "Zmeyka" );
+IMPLEMENT_PRIMARY_GAME_MODULE(FDefaultGameModuleImpl, Zmeyka, "Zmeyka");

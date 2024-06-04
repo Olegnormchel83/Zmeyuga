@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "PlayerPawnBase.h"
 #include "Camera/CameraComponent.h"
 #include "SnakeBase.h"
@@ -9,9 +8,9 @@
 // Sets default values
 APlayerPawnBase::APlayerPawnBase()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	CanInput = true;
 	PawnCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("PawnCamera"));
 	RootComponent = PawnCamera;
 }
@@ -28,7 +27,6 @@ void APlayerPawnBase::BeginPlay()
 void APlayerPawnBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
@@ -47,31 +45,48 @@ void APlayerPawnBase::CreateSnakeActor()
 
 void APlayerPawnBase::HandlePlayerVerticalInput(float value)
 {
-	if (IsValid(SnakeActor))
+	if (IsValid(SnakeActor) && CanInput)
 	{
 		if (value > 0 && SnakeActor->LastMoveDirection != EMovementDirection::DOWN)
 		{
 			SnakeActor->LastMoveDirection = EMovementDirection::UP;
+
+			CanInput = false;
 		}
 		else if (value < 0 && SnakeActor->LastMoveDirection != EMovementDirection::UP)
 		{
 			SnakeActor->LastMoveDirection = EMovementDirection::DOWN;
+			
+			CanInput = false;
 		}
+	}
+
+	if (SnakeActor->CanChangeDirection)
+	{
+		CanInput = true;
 	}
 }
 
 void APlayerPawnBase::HandlePlayerHorizontalInput(float value)
 {
-	if (IsValid(SnakeActor))
+	if (IsValid(SnakeActor) && CanInput)
 	{
 		if (value > 0 && SnakeActor->LastMoveDirection != EMovementDirection::LEFT)
 		{
 			SnakeActor->LastMoveDirection = EMovementDirection::RIGHT;
+			
+			CanInput = false;
 		}
 		else if (value < 0 && SnakeActor->LastMoveDirection != EMovementDirection::RIGHT)
 		{
 			SnakeActor->LastMoveDirection = EMovementDirection::LEFT;
+			
+			CanInput = false;
 		}
 	}
-}
 
+	if (SnakeActor->CanChangeDirection)
+	{
+		CanInput = true;
+	}
+}
