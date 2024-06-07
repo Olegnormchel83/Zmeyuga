@@ -3,6 +3,7 @@
 
 #include "BonusSpeedDOWN.h"
 #include "SnakeBase.h"
+#include "Obstacle.h"
 
 ABonusSpeedDOWN::ABonusSpeedDOWN()
 {
@@ -26,8 +27,15 @@ void ABonusSpeedDOWN::Interact(AActor* Interactor, bool bIsHead)
 		auto Snake = Cast<ASnakeBase>(Interactor);
 		if (IsValid(Snake))
 		{
-			Snake->PickUpBonusSpeedDOWN();// (Тестируется)
-			//TODO: написать в змейке логику подбора бонуса ументшения скорости + создать блюпринтового наследника этого класса в ContentDrawer
+			Snake->PickUpBonusSpeedDOWN();
+			this->Destroy();
+		}
+	}
+	else if (!bIsHead)
+	{
+		auto Obstacle = Cast<AObstacle>(Interactor);
+		if (IsValid(Obstacle))
+		{
 			this->Destroy();
 		}
 	}

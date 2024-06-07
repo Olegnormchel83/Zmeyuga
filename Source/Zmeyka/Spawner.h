@@ -20,14 +20,22 @@ public:
 	// Sets default values for this actor's properties
 	ASpawner();
 
-	UPROPERTY()
-	AApple* Apple;
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AApple> AppleClass;
 
-	UPROPERTY()
-	ABonusSpeedUP* BonusSpeedUP;
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ABonusSpeedUP> BonusSpeedUPClass;
 
-	UPROPERTY()
-	ABonusSpeedUP* BonusSpeedDOWN;
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ABonusSpeedDOWN> BonusSpeedDOWNClass;
+
+	int *PositionsX;
+
+	int *PositionsY;
+	
+	int PositionZ;
+
+	float CustomTickInterval;
 
 protected:
 	// Called when the game starts or when spawned
@@ -37,9 +45,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	virtual void SpawnFood(AApple* apple);
+	virtual void SpawnFood();
 
-	virtual int GetActiveFood();
-
-	virtual int GetActiveBonuses();
+	virtual void SpawnBonuses();
 };

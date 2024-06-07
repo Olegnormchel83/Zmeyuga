@@ -7,6 +7,8 @@
 #include "Interactable.h"
 #include "Obstacle.generated.h"
 
+class ASpawner;
+
 UCLASS()
 class ZMEYKA_API AObstacle : public AActor, public IInteractable
 {

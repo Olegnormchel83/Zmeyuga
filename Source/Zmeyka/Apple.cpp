@@ -3,6 +3,7 @@
 
 #include "Apple.h"
 #include "SnakeBase.h"
+#include "Obstacle.h"
 
 AApple::AApple()
 {
@@ -27,6 +28,14 @@ void AApple::Interact(AActor* Interactor, bool bIsHead)
 		if (IsValid(Snake))
 		{
 			Snake->AddSnakeElements();
+			this->Destroy();
+		}
+	}
+	else if (!bIsHead)
+	{
+		auto Obstacle = Cast<AObstacle>(Interactor);
+		if (IsValid(Obstacle))
+		{
 			this->Destroy();
 		}
 	}

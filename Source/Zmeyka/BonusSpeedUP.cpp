@@ -3,6 +3,7 @@
 
 #include "BonusSpeedUP.h"
 #include "SnakeBase.h"
+#include "Obstacle.h"
 
 ABonusSpeedUP::ABonusSpeedUP()
 {
@@ -26,7 +27,15 @@ void ABonusSpeedUP::Interact(AActor* Interactor, bool bIsHead)
 		auto Snake = Cast<ASnakeBase>(Interactor);
 		if (IsValid(Snake))
 		{
-			Snake->PickUpBonusSpeedUP(); //(Тестируется)
+			Snake->PickUpBonusSpeedUP();
+			this->Destroy();
+		}
+	}
+	else if (!bIsHead)
+	{
+		auto Obstacle = Cast<AObstacle>(Interactor);
+		if (IsValid(Obstacle))
+		{
 			this->Destroy();
 		}
 	}

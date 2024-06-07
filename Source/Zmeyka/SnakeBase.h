@@ -7,6 +7,7 @@
 #include "SnakeBase.generated.h"
 
 class ASnakeElementBase;
+class APlayerPawnBase;
 
 UENUM()
 enum class EMovementDirection
@@ -37,6 +38,9 @@ public:
 
 	UPROPERTY()
 	bool CanChangeDirection;
+
+	UPROPERTY()
+	bool IsDead;
 
 	UPROPERTY()
 	TArray<ASnakeElementBase*> SnakeElements;

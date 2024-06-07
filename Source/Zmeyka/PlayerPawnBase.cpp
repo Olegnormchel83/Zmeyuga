@@ -27,6 +27,10 @@ void APlayerPawnBase::BeginPlay()
 void APlayerPawnBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (SnakeActor->CanChangeDirection)
+	{
+		CanInput = true;
+	}
 }
 
 // Called to bind functionality to input
@@ -61,10 +65,7 @@ void APlayerPawnBase::HandlePlayerVerticalInput(float value)
 		}
 	}
 
-	if (SnakeActor->CanChangeDirection)
-	{
-		CanInput = true;
-	}
+	
 }
 
 void APlayerPawnBase::HandlePlayerHorizontalInput(float value)
@@ -83,10 +84,5 @@ void APlayerPawnBase::HandlePlayerHorizontalInput(float value)
 			
 			CanInput = false;
 		}
-	}
-
-	if (SnakeActor->CanChangeDirection)
-	{
-		CanInput = true;
 	}
 }

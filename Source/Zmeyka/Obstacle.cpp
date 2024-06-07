@@ -16,14 +16,12 @@ AObstacle::AObstacle()
 void AObstacle::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
 void AObstacle::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AObstacle::Interact(AActor* Interactor, bool bIsHead)
@@ -33,6 +31,7 @@ void AObstacle::Interact(AActor* Interactor, bool bIsHead)
 		auto Snake = Cast<ASnakeBase>(Interactor);
 		if (IsValid(Snake))
 		{
+			Snake->IsDead = true;
 			Snake->Destroy();
 		}
 	}

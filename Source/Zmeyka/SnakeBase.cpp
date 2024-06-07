@@ -16,6 +16,7 @@ ASnakeBase::ASnakeBase()
 	SlowerMovementSpeed = 0.25f;
 	CanChangeDirection = true;
 	LastMoveDirection = EMovementDirection::LEFT;
+	IsDead = false;
 }
 
 // Called when the game starts or when spawned
@@ -31,11 +32,8 @@ void ASnakeBase::BeginPlay()
 void ASnakeBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (CanChangeDirection)
-	{
-		Move();
-	}
-	
+	UE_LOG(LogTemp, Warning, TEXT("Step"));
+	Move();
 }
 
 void ASnakeBase::AddSnakeElements(int ElementsNum)
@@ -94,7 +92,6 @@ void ASnakeBase::PickUpBonusSpeedDOWN()
 		CurrentMovementSpeed = SlowerMovementSpeed;
 		SetActorTickInterval(CurrentMovementSpeed);
 	}
-	//Уменьшать скорость на 1 тир. Если текущая скорость Быстрая, делать ее Нормальной. Если текущая скорость Нормальная, делать ее Медленной.
 }
 
 void ASnakeBase::Move()
@@ -105,19 +102,15 @@ void ASnakeBase::Move()
 	{
 	case EMovementDirection::UP:
 		MovementVector.X += ElementSize;
-		CanChangeDirection = false;
 		break;
 	case EMovementDirection::DOWN:
 		MovementVector.X -= ElementSize;
-		CanChangeDirection = false;
 		break;
 	case EMovementDirection::LEFT:
 		MovementVector.Y += ElementSize;
-		CanChangeDirection = false;
 		break;
 	case EMovementDirection::RIGHT:
 		MovementVector.Y -= ElementSize;
-		CanChangeDirection = false;
 		break;
 	}
 
@@ -133,7 +126,6 @@ void ASnakeBase::Move()
 
 	SnakeElements[0]->AddActorWorldOffset(MovementVector);
 	SnakeElements[0]->ToggleCollision();
-	CanChangeDirection = true;
 }
 
 void ASnakeBase::SnakeELementOverlap(ASnakeElementBase* OverlappedBlock, AActor* Other)

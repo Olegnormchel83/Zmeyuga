@@ -7,7 +7,6 @@
 #include "Interactable.h"
 #include "Apple.generated.h"
 
-
 /**
  * 
  */
