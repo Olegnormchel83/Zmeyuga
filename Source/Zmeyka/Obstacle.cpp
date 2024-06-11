@@ -3,6 +3,9 @@
 
 #include "Obstacle.h"
 #include "SnakeBase.h"
+#include "Apple.h"
+#include "BonusSpeedUP.h"
+#include "BonusSpeedDOWN.h"
 
 // Sets default values
 AObstacle::AObstacle()
@@ -33,6 +36,24 @@ void AObstacle::Interact(AActor* Interactor, bool bIsHead)
 		{
 			Snake->IsDead = true;
 			Snake->Destroy();
+		}
+	}
+	else
+	{
+		auto Apple = Cast<AApple>(Interactor);
+		if (IsValid(Apple))
+		{
+			Apple->Destroy();
+		}
+		auto BonusSpeedUP = Cast<ABonusSpeedUP>(Interactor);
+		if (IsValid(BonusSpeedUP))
+		{
+			BonusSpeedUP->Destroy();
+		}
+		auto BonusSpeedDown = Cast<ABonusSpeedDOWN>(Interactor);
+		if (IsValid(BonusSpeedDown))
+		{
+			BonusSpeedDown->Destroy();
 		}
 	}
 }

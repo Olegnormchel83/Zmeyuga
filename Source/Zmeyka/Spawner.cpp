@@ -4,7 +4,7 @@
 #include "Apple.h"
 #include "BonusSpeedUP.h"
 #include "BonusSpeedDOWN.h"
-#include "SnakeBase.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ASpawner::ASpawner()
@@ -35,6 +35,7 @@ void ASpawner::BeginPlay()
 {
 	Super::BeginPlay();
 	SetActorTickInterval(CustomTickInterval);
+	
 }
 
 // Called every frame
@@ -42,8 +43,15 @@ void ASpawner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	//TODO: Спавнер должен знать, жива змейка или нет. Если жива - спавнить еду, если нет - не спавнить.
-	SpawnFood();
-	SpawnBonuses();
+	if (CheckSnakeIsAlive())
+	{
+		SpawnFood();
+		SpawnBonuses();
+	}
+	else
+	{
+		DestroyActiveBonuses();
+	}
 }
 
 void ASpawner::SpawnFood()
@@ -55,6 +63,50 @@ void ASpawner::SpawnFood()
 	AApple* NewApple = GetWorld()->SpawnActor<AApple>(AppleClass, NewTransform);
 }
 
+
+bool ASpawner::CheckSnakeIsAlive()
+{
+	Snake = Cast<ASnakeBase>(UGameplayStatics::GetActorOfClass(GetWorld(), ASnakeBase::StaticClass()));
+
+	if (Snake == nullptr) 
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+void ASpawner::DestroyActiveBonuses()
+{
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AApple::StaticClass(), OutActors);
+	if (OutActors.Num() != 0)
+	{
+		Clean(OutActors);
+	}
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABonusSpeedDOWN::StaticClass(), OutActors);
+	if (OutActors.Num() != 0)
+	{
+		Clean(OutActors);
+	}
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABonusSpeedUP::StaticClass(), OutActors);
+	if (OutActors.Num() != 0)
+	{
+		Clean(OutActors);
+	}
+}
+
+void ASpawner::Clean(TArray<AActor*> TargetArray)
+{
+	if (TargetArray.Num() != 0)
+	{
+		for (AActor* a : TargetArray)
+		{
+			a->Destroy();
+		}
+	}
+}
 
 void ASpawner::SpawnBonuses()
 {
@@ -74,3 +126,4 @@ void ASpawner::SpawnBonuses()
 		ABonusSpeedDOWN* NewBonusSpeedDOWN = GetWorld()->SpawnActor<ABonusSpeedDOWN>(BonusSpeedDOWNClass, NewTransform);
 	}
 }
+

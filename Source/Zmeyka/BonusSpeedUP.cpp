@@ -31,7 +31,7 @@ void ABonusSpeedUP::Interact(AActor* Interactor, bool bIsHead)
 			this->Destroy();
 		}
 	}
-	else if (!bIsHead)
+	else
 	{
 		auto Obstacle = Cast<AObstacle>(Interactor);
 		if (IsValid(Obstacle))

@@ -27,9 +27,16 @@ void APlayerPawnBase::BeginPlay()
 void APlayerPawnBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (SnakeActor->CanChangeDirection)
+	if (IsValid(SnakeActor))
 	{
-		CanInput = true;
+		if (SnakeActor->CanChangeDirection)
+		{
+			CanInput = true;
+		}
+		if (SnakeActor->IsDead)
+		{
+			CanInput = false;
+		}
 	}
 }
 

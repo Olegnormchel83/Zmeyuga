@@ -32,8 +32,11 @@ void ASnakeBase::BeginPlay()
 void ASnakeBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	UE_LOG(LogTemp, Warning, TEXT("Step"));
-	Move();
+	CanChangeDirection = true;
+	if (CanChangeDirection)
+	{
+		Move();	
+	}
 }
 
 void ASnakeBase::AddSnakeElements(int ElementsNum)

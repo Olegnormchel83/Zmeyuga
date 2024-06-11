@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Food2.h"
+#include "SnakeBase.h"
 #include "Spawner.generated.h"
 
 class AApple;
@@ -29,6 +30,22 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ABonusSpeedDOWN> BonusSpeedDOWNClass;
 
+	ASnakeBase* Snake;
+
+	AApple* Apple;
+
+	TArray<AApple*> ActiveApples;
+
+	ABonusSpeedUP* BonusSpeedUP;
+
+	TArray<ABonusSpeedUP*> ActiveSonusesSpeedUP;
+
+	ABonusSpeedDOWN* BonusSpeedDOWN;
+
+	TArray<ABonusSpeedDOWN*> ActiveSonusesSpeedDOWN;
+
+	TArray<AActor*> OutActors;
+
 	int *PositionsX;
 
 	int *PositionsY;
@@ -48,4 +65,10 @@ public:
 	virtual void SpawnFood();
 
 	virtual void SpawnBonuses();
+
+	virtual bool CheckSnakeIsAlive();
+
+	virtual void DestroyActiveBonuses();
+
+	virtual void Clean(TArray<AActor*> TargetArray);
 };
